@@ -113,6 +113,7 @@ import MatchedPropertyTable from './Detail/MatchedPropertyTable';
 import MatchedList from './Detail/MatchedList';
 import FeaturedProperty from './FeaturedProperty';
 import ViewedProperties from './Detail/ViewedProperty';
+import NotificationForm from './NotificationSend';
 
 
 
@@ -214,6 +215,7 @@ const routes = [
   { path: "matched-property-list", element: <MatchedList /> },
   { path: "feature-property", element: <FeaturedProperty /> },
   { path: "viewed-property", element: <ViewedProperties /> },
+  { path: "notification-send", element: <NotificationForm /> },
 
 
 

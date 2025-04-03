@@ -302,6 +302,17 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           Admin Set Property
         </NavLink>
       </li>
+
+      <li className="p-0 mt-2" >
+        <NavLink
+          to="/dashboard/notification-send"
+          onClick={toggleSidebar}
+          className={({ isActive }) => (isActive ? "active-link rounded" : "")}
+        >
+          <FaFileAlt />
+        Notification Send Form      
+ </NavLink>
+      </li>
      
     
       
