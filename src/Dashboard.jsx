@@ -114,8 +114,9 @@ import MatchedList from './Detail/MatchedList';
 import FeaturedProperty from './FeaturedProperty';
 import ViewedProperties from './Detail/ViewedProperty';
 import NotificationForm from './NotificationSend';
-
-
+import ProfileTable from './GetUserProfile';
+import GetUserCalledList from './GetUserCalledList';
+import AddProps from './AddProps';
 
 const routes = [
   { path: "/loginreport", element: <LoginReport /> }, 
@@ -159,7 +160,7 @@ const routes = [
   { path: "/help", element: <Help /> },
   { path: "/help-loan-lead", element: <HelpLoanLead /> },
   { path: "/insurance-lead", element: <InsuranceLead /> },
-  { path: "/last-viewed-car", element: <LastViewedCar /> },
+  { path: "/last-viewed-property", element: <LastViewedCar /> },
   { path: "/limits", element: <Limits /> },
   { path: "/matched-buyer", element: <MatchedBuyer /> },
   { path: "/mobile-view-lead", element: <MobileViewLead /> },
@@ -216,6 +217,11 @@ const routes = [
   { path: "feature-property", element: <FeaturedProperty /> },
   { path: "viewed-property", element: <ViewedProperties /> },
   { path: "notification-send", element: <NotificationForm /> },
+  { path: "profile-table", element: <ProfileTable /> },
+  { path: "user-call-list", element: <GetUserCalledList /> },
+  { path: "add-props/:phoneNumber", element: <AddProps /> },
+
+
 
 
 

@@ -1,203 +1,118 @@
-// import React from 'react'
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
-// export default function LastViewedCar() {
-//   return (
-//     <div>LastViewedCar</div>
-//   )
-// }
+const AllLastViewedProperties = () => {
+  const [views, setViews] = useState([]);
+  const [filteredViews, setFilteredViews] = useState([]);
+  const [search, setSearch] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
-import React, { useState } from "react";
-import { Table, Button, Modal } from "react-bootstrap";
+  useEffect(() => {
+    fetchLastViewedProperties();
+  }, []);
 
-const LastViewedCar = () => {
-    const [fromDate, setFromDate] = useState("");
-        const [endDate, setEndDate] = useState("");
-        const [search, setSearch] = useState("");
-      
-        const handleSubmit = (e) => {
-          e.preventDefault();
-          alert(`Search: ${search}, From Date: ${fromDate}, End Date: ${endDate}`);
-        };
-  const initialData = [
-    {
-      sNo: 1,
-      pucId: 2951,
-      postedFrom: "PUC",
-      carTitle: "Toyota Etios",
-      customer: "7598862321",
-      owner: "8072080646",
-      view: "Unread",
-      date: "2024-12-25",
-      planName: "FREE",
-    },
-    {
-      sNo: 2,
-      pucId: 8208,
-      postedFrom: "PUC",
-      carTitle: "Morris Garage Astor",
-      customer: "9489339649",
-      owner: "9600902096",
-      view: "Unread",
-      date: "2024-12-25",
-      planName: "FREE",
-    },
-    {
-      sNo: 3,
-      pucId: 4786,
-      postedFrom: "PUC",
-      carTitle: "Volks Wagen Others",
-      customer: "9489339649",
-      owner: "9600897445",
-      view: "Unread",
-      date: "2024-12-25",
-      planName: "FREE",
-    },
-  ];
+  useEffect(() => {
+    applyFilters();
+  }, [search, fromDate, endDate, views]);
 
-  const [data, setData] = useState(initialData);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedCar, setSelectedCar] = useState(null);
-
-  const handleDeleteClick = (car) => {
-    setSelectedCar(car);
-    setShowModal(true);
+  const fetchLastViewedProperties = async () => {
+    try {
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/user-get-all-last-views`);
+      setViews(data);
+    } catch (err) {
+      console.error("Failed to fetch last viewed properties", err);
+    }
   };
 
-  const handleDeleteConfirm = () => {
-    setData(data.filter((item) => item.pucId !== selectedCar.pucId));
-    setShowModal(false);
-    setSelectedCar(null);
+  const applyFilters = () => {
+    const filtered = views.filter((entry) => {
+      const createdAt = new Date(entry.viewedAt).getTime();
+      const from = fromDate ? new Date(fromDate).getTime() : null;
+      const to = endDate ? new Date(endDate).getTime() : null;
+
+      const matchesSearch = search
+        ? entry.property?.ppcId?.toString().toLowerCase().includes(search.toLowerCase())
+        : true;
+      const matchesFromDate = from ? createdAt >= from : true;
+      const matchesToDate = to ? createdAt <= to : true;
+
+      return matchesSearch && matchesFromDate && matchesToDate;
+    });
+
+    setFilteredViews(filtered);
   };
 
   return (
-    <>
-    <div className="d-flex justify-content-between align-items-center mb-3">
+    <div className="container mx-auto p-6">
+      <h2 className="text-2xl font-bold mb-4">All Users' Last Viewed Properties</h2>
 
-    <button className="btn" style={{background:"#5F9EA0", color:"#fff", border:'none'}}>delete buyer Assistant</button>
-    </div>
-    <div className="d-flex justify-content-between align-items-center mb-3">
-    <h4>Manage Searched Data
-    </h4>  <button className="btn" style={{background:"#2EA44F", color:"#fff", border:'none'}}>EXPORT WITH OTP VERIFICATION</button>
-    </div>
-    <div className="container mt-5">
-      <h2 className="mb-4">User Logs</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="searchInput" className="form-label">
-            Search
-          </label>
-          <input
-            type="text"
-            id="searchInput"
-            className="form-control"
-            placeholder="Enter search term"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
+      {/* Filters */}
+      <div className="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <input
+          type="text"
+          placeholder="Search by PPC ID"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="border border-gray-300 p-2 rounded"
+        />
+        <input
+          type="date"
+          value={fromDate}
+          onChange={(e) => setFromDate(e.target.value)}
+          className="border border-gray-300 p-2 rounded"
+        />
+        <input
+          type="date"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+          className="border border-gray-300 p-2 rounded"
+        />
+      </div>
 
-      {/* From Date Field */}
-      <div className="mb-3">
-          <label htmlFor="fromDate" className="form-label">
-            From Date
-          </label>
-          <input
-            type="date"
-            id="fromDate"
-            className="form-control"
-            value={fromDate}
-            onChange={(e) => setFromDate(e.target.value)}
-          />
-        </div>
 
-        {/* End Date Field */}
-        <div className="mb-3">
-          <label htmlFor="endDate" className="form-label">
-            End Date
-          </label>
-          <input
-            type="date"
-            id="endDate"
-            className="form-control"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-          />
-        </div>
-        <button type="submit" className="btn" style={{background:"#E91E63", color:"#fff", border:'none'}}>
-          Submit
-        </button>
-      </form>
-    </div>
-    <div>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>S.No</th>
-            <th>PUC Id</th>
-            <th>Posted From</th>
-            <th>Car Title</th>
-            <th>Customer</th>
-            <th>Owner</th>
-            <th>View</th>
-            <th>Date</th>
-            <th>Plan Name</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((item) => (
-            <tr key={item.pucId}>
-              <td>{item.sNo}</td>
-              <td>{item.pucId}</td>
-              <td>{item.postedFrom}</td>
-              <td>{item.carTitle}</td>
-              <td>{item.customer}</td>
-              <td>{item.owner}</td>
-              <td>{item.view}</td>
-              <td>{item.date}</td>
-              <td>{item.planName}</td>
-              <td>
-                <Button
-                  variant="danger"
-                  size="sm"
-                  onClick={() => handleDeleteClick(item)}
-                >
-                  Delete
-                </Button>
-              </td>
+      {/* Table */}
+      <div className="overflow-x-auto mt-3">
+        <h3> All User Viewed Properties </h3>
+        <table className="min-w-full border border-gray-300 text-sm">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="border px-4 py-2">#</th>
+              <th className="border px-4 py-2">Phone Number</th>
+              <th className="border px-4 py-2">PPC ID</th>
+              <th className="border px-4 py-2">Property Type</th>
+              <th className="border px-4 py-2">City</th>
+              <th className="border px-4 py-2">District</th>
+              <th className="border px-4 py-2">Viewed At</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
-
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Delete Car</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {selectedCar && (
-            <div>
-              <p><strong>Car Title:</strong> {selectedCar.carTitle}</p>
-              <p><strong>Customer:</strong> {selectedCar.customer}</p>
-              <p><strong>Owner:</strong> {selectedCar.owner}</p>
-              <p><strong>Plan Name:</strong> {selectedCar.planName}</p>
-              <p><strong>Date:</strong> {selectedCar.date}</p>
-            </div>
-          )}
-          <p>Are you sure you want to delete this car?</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Close
-          </Button>
-          <Button variant="danger" onClick={handleDeleteConfirm}>
-            Delete
-          </Button>
-        </Modal.Footer>
-      </Modal>
+          </thead>
+          <tbody>
+            {filteredViews.length > 0 ? (
+              filteredViews.map((entry, index) => (
+                <tr key={entry.property._id || index}>
+                  <td className="border px-4 py-2">{index + 1}</td>
+                  <td className="border px-4 py-2">{entry.phoneNumber}</td>
+                  <td className="border px-4 py-2">{entry.property.ppcId}</td>
+                  <td className="border px-4 py-2">{entry.property.propertyType}</td>
+                  <td className="border px-4 py-2">{entry.property.city || "-"}</td>
+                  <td className="border px-4 py-2">{entry.property.district || "-"}</td>
+                  <td className="border px-4 py-2">
+                    {new Date(entry.viewedAt).toLocaleString()}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="7" className="text-center p-4">
+                  No entries found
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
-    </>
   );
 };
 
-export default LastViewedCar;
+export default AllLastViewedProperties;

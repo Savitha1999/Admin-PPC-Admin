@@ -1,10 +1,3 @@
-// import React from 'react'
-
-// export default function DailyUsage() {
-//   return (
-//     <div>DailyUsage</div>
-//   )
-// }
 
 
 
@@ -202,3 +195,5 @@ const PaginationTable = () => {
 };
 
 export default PaginationTable;
+
+

@@ -19,6 +19,7 @@ const Admin = ({ onLogin }) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+
   const DEFAULT_CREDENTIALS = {
     name: 'admin',
     password: 'admin123',
@@ -78,6 +79,60 @@ const Admin = ({ onLogin }) => {
       navigate('/dashboard/statistics');
     }
 }, [formData, navigate]); // Adjust the dependencies based on formData changes
+
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
+//   setLoading(true);
+
+//   if (
+//     formData.name === DEFAULT_CREDENTIALS.name &&
+//     formData.password === DEFAULT_CREDENTIALS.password &&
+//     formData.role === DEFAULT_CREDENTIALS.role &&
+//     formData.userType === DEFAULT_CREDENTIALS.userType
+//   ) {
+//     toast.success('Default Admin Login successful!');
+//     onLogin(DEFAULT_CREDENTIALS); // set default credentials in global
+//     navigate('/dashboard/statistics');
+//     setLoading(false);
+//     return;
+//   }
+
+//   try {
+//     const response = await axios.post(
+//       `${process.env.REACT_APP_API_URL}/adminlogin`,
+//       formData,
+//       {
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//       }
+//     );
+
+//     const adminData = response.data.data;
+//     onLogin(adminData); // Send logged-in admin info with profileImage to parent/global
+//     toast.success('Admin Login successful!');
+//     navigate('/dashboard/statistics');
+//     setFormData({ name: '', password: '', role: '', userType: '' });
+
+//   } catch (err) {
+//     console.error(err);
+//     if (err.response && err.response.data.message) {
+//       toast.error(`Error: ${err.response.data.message}`);
+//     } else {
+//       toast.error("Something went wrong");
+//     }
+//   } finally {
+//     setLoading(false);
+//   }
+// };
+
+// useEffect(() => {
+//   if (formData.name === DEFAULT_CREDENTIALS.name && formData.password === DEFAULT_CREDENTIALS.password) {
+//     toast.success('Default Admin Login successful!');
+//     navigate('/dashboard/statistics');
+//   }
+// }, [formData, navigate]); // Adjust the dependencies based on formData changes
+
 
   return (
     <>

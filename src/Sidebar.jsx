@@ -314,6 +314,29 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
  </NavLink>
       </li>
      
+      <li className="p-0 mt-2" >
+        <NavLink
+          to="/dashboard/profile-table"
+          onClick={toggleSidebar}
+          className={({ isActive }) => (isActive ? "active-link rounded" : "")}
+        >
+          <FaFileAlt />
+          Get User Profile
+ </NavLink>
+      </li>
+
+        
+      <li className="p-0 mt-2" >
+        <NavLink
+          to="/dashboard/user-call-list"
+          onClick={toggleSidebar}
+          className={({ isActive }) => (isActive ? "active-link rounded" : "")}
+        >
+          <FaFileAlt />
+User Call List
+ </NavLink>
+      </li>
+     
     
       
      <li className="p-3 mt-2  text-white"  style={{borderRadius:"5px",  background:"#8BC34A"}}>
@@ -683,14 +706,9 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       Buyers Contacted
     </NavLink>
   </li> */}
+ 
   <li className="p-0 mt-2">
-    <NavLink to="/dashboard/buyers-shortlisted" style={{color:"rgb(226,41,151)", fontWeight:"bold"}} onClick={toggleSidebar} className={({ isActive }) => (isActive ? "active-link rounded" : "")}>
-      <FaUser />
-      Buyers Shortlisted
-    </NavLink>
-  </li>
-  <li className="p-0 mt-2">
-    <NavLink to="/dashboard/last-viewed-car" style={{color:"rgb(226,41,151)", fontWeight:"bold"}} onClick={toggleSidebar} className={({ isActive }) => (isActive ? "active-link rounded" : "")}>
+    <NavLink to="/dashboard/last-viewed-property"  onClick={toggleSidebar} className={({ isActive }) => (isActive ? "active-link rounded" : "")}>
       <FaCar />
       Last Viewed Property
     </NavLink>
@@ -750,20 +768,11 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         </NavLink>
       </li>
       <li className="p-0 mt-2">
-        <NavLink to="/dashboard/my-account" style={{color:"rgb(226,41,151)", fontWeight:"bold"}} onClick={toggleSidebar} className={({ isActive }) => (isActive ? "active-link rounded" : "")}>
+        <NavLink to="/dashboard/my-account" onClick={toggleSidebar} className={({ isActive }) => (isActive ? "active-link rounded" : "")}>
           <RiUserSettingsFill size={20} /> My Account
         </NavLink>
       </li>
-      <li className="p-3 mt-2  text-white"  style={{borderRadius:"5px",  background:"#8BC34A"}}>
-      {/* <NavLink to="/dashboard/customer-details" style={{color:"#ABD6E9"}} onClick={toggleSidebar} className={({ isActive }) => (isActive ? "active-link rounded" : "")}> */}
-          <RiGroupFill size={20} style={{marginRight:'10px '}}/> Customer Details
-        {/* </NavLink> */}
-      </li>
-      <li className="p-0 mt-2">
-        <NavLink to="/dashboard/details" style={{color:"rgb(226,41,151)", fontWeight:"bold"}} onClick={toggleSidebar} className={({ isActive }) => (isActive ? "active-link rounded" : "")}>
-          <RiFileListFill size={20} /> Details
-        </NavLink>
-      </li>
+      
       <li className="p-3 mt-2  text-white"  style={{borderRadius:"5px",  background:"#8BC34A"}}>
       {/* <NavLink to="/dashboard/follow-ups" style={{color:"#ABD6E9"}} onClick={toggleSidebar} className={({ isActive }) => (isActive ? "active-link rounded" : "")}> */}
           <RiNewspaperFill size={20} style={{marginRight:'10px '}}/> Follow Ups
@@ -851,7 +860,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         </NavLink>
       </li>
       <li className="p-0 mt-2">
-        <NavLink to="/dashboard/profile" style={{color:"rgb(226,41,151)", fontWeight:"bold"}} onClick={toggleSidebar} className={({ isActive }) => (isActive ? "active-link rounded" : "")}>
+        <NavLink to="/dashboard/profile"  onClick={toggleSidebar} className={({ isActive }) => (isActive ? "active-link rounded" : "")}>
           <RiAccountCircleFill size={20} /> Profile
         </NavLink>
       </li>
