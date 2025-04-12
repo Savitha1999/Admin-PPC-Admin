@@ -74,6 +74,34 @@ const LoginReport = () => {
     fetchData();
   }, []);
 
+
+  
+const handleUndoPermanentLogout = async (phone) => {
+  try {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/user/revert-permanent-logout`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ phone }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert(`✅ ${data.message}`);
+      // Optionally: Refresh your list here
+    } else {
+      alert(`❌ ${data.message}`);
+    }
+  } catch (error) {
+    alert('⚠️ Something went wrong. Please try again.');
+    console.error(error);
+  }
+};
+
+
+
   const handleToggleStatus = async (phone, action) => {
     const reason = prompt(`Enter a reason for ${action === "delete" ? "deleting" : "banning"} this user:`);
 
@@ -239,7 +267,16 @@ const LoginReport = () => {
                         >
                           {item.status === 'banned' ? 'Unban' : 'Ban'}
                         </button>
+                      
                       </div>
+                    </td>
+                    <td>
+                    <button
+      className="btn btn-info btn-sm"
+      onClick={() => handleUndoPermanentLogout(item.phone)}
+    >
+      Undo Permanent Logout
+    </button>
                     </td>
                   </tr>
                 ))
